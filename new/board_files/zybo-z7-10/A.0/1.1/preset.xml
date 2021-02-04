@@ -717,7 +717,36 @@
         </user_parameters>
     </ip>
   </ip_preset>
+
+  <ip_preset preset_proc_name="hdmi_in_preset">
+    <ip vendor="digilentinc.com" library="ip" name="dvi2rgb" ip_interface="TMDS">
+      <user_parameters>
+        <user_parameter name="CONFIG.kClkSwap" value="0"/>
+        <user_parameter name="CONFIG.kD0Swap" value="0"/>
+        <user_parameter name="CONFIG.kD1Swap" value="0"/>
+        <user_parameter name="CONFIG.kD2Swap" value="0"/>
+      </user_parameters>
+    </ip>
+  </ip_preset>
   
+  <ip_preset preset_proc_name="hdmi_out_preset">
+    <ip vendor="digilentinc.com" library="ip" name="rgb2dvi" ip_interface="TMDS">
+      <user_parameters>
+        <user_parameter name="CONFIG.kClkSwap" value="0"/>
+        <user_parameter name="CONFIG.kD0Swap" value="0"/>
+        <user_parameter name="CONFIG.kD1Swap" value="0"/>
+        <user_parameter name="CONFIG.kD2Swap" value="0"/>
+      </user_parameters>
+    </ip>
+    <ip vendor="xilinx.com" library="ip" name="axi_gpio" ip_interface="GPIO">
+        <user_parameters>
+          <user_parameter name="CONFIG.C_IS_DUAL" value="0"/>
+          <user_parameter name="CONFIG.C_GPIO_WIDTH" value="1"/>
+          <user_parameter name="CONFIG.C_ALL_INPUTS" value="1"/>
+        </user_parameters>
+    </ip>
+  </ip_preset>
+
   <ip_preset preset_proc_name="sys_clock_preset">
     <ip vendor="xilinx.com" library="ip" name="clk_wiz" ip_interface="clk_in1">
         <user_parameters>

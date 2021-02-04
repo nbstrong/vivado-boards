@@ -136,6 +136,7 @@
       </interface>
 
       <interface mode="master" name="hdmi_in_hpa" type="xilinx.com:signal:reset_rtl:1.0" of_component="hdmi_in" preset_proc="hdmi_in_preset">
+        <description>DVI/HDMI Source Hot-Plug Assert Output</description>
         <preferred_ips>
           <preferred_ip vendor="xilinx.com" library="ip" name="clk_wiz" order="0"/>
           <preferred_ip vendor="xilinx.com" library="ip" name="xlconstant" order="1"/>
@@ -152,58 +153,96 @@
         </port_maps>
       </interface>
 
-      <interface mode="master" name="hdmi_out" type="digilentinc.com:interface:tmds_rtl:1.0" of_component="hdmi_out">
-        <description>HDMI Out</description>
-		<preferred_ips>
+      <interface mode="master" name="hdmi_out_tmds" type="digilentinc.com:interface:tmds_rtl:1.0" of_component="hdmi_out" preset_proc="hdmi_out_preset">
+        <preferred_ips>
 			<preferred_ip vendor="digilentinc.com" library="ip" name="rgb2dvi" order="0"/>
 		</preferred_ips>
+		<description>DVI/HDMI Source Output</description>
 		<port_maps>
-          <port_map logical_port="CLK_P" physical_port="TMDS_OUT_clk_p" dir="out">
+		<!-- Mapping: -->
+		<!-- logical port of the interface -->
+		<!-- physical port top-level port -->
+		<!-- component pin (part0_pins.xml) -->
+          <port_map logical_port="CLK_P" physical_port="hdmi_out_tmds_clk_p" dir="out">
             <pin_maps>
-              <pin_map port_index="0" component_pin="TMDS_OUT_clk_p"/> 
+              <pin_map port_index="0" component_pin="hdmi_tx_clk_p"/> 
             </pin_maps>
           </port_map>
-          <port_map logical_port="CLK_N" physical_port="TMDS_OUT_clk_n" dir="out">
+          <port_map logical_port="CLK_N" physical_port="hdmi_out_tmds_clk_n" dir="out">
             <pin_maps>
-              <pin_map port_index="0" component_pin="TMDS_OUT_clk_n"/> 
+              <pin_map port_index="0" component_pin="hdmi_tx_clk_n"/> 
             </pin_maps>
           </port_map>
-          <port_map logical_port="DATA_P" physical_port="TMDS_OUT_D_P" dir="out" left="2" right="0">
+          <port_map logical_port="DATA_P" physical_port="hdmi_out_tmds_data_p" dir="out" left="2" right="0">
             <pin_maps>
-              <pin_map port_index="0" component_pin="TMDS_OUT_data_p_0"/> 
-              <pin_map port_index="1" component_pin="TMDS_OUT_data_p_1"/> 
-              <pin_map port_index="2" component_pin="TMDS_OUT_data_p_2"/> 
+              <pin_map port_index="0" component_pin="hdmi_tx_0_p"/> 
+              <pin_map port_index="1" component_pin="hdmi_tx_1_p"/> 
+              <pin_map port_index="2" component_pin="hdmi_tx_2_p"/> 
             </pin_maps>
           </port_map>
-          <port_map logical_port="DATA_N" physical_port="TMDS_OUT_D_N" dir="out" left="2" right="0">
+          <port_map logical_port="DATA_N" physical_port="hdmi_out_tmds_data_n" dir="out" left="2" right="0">
             <pin_maps>
-              <pin_map port_index="0" component_pin="TMDS_OUT_data_n_0"/> 
-              <pin_map port_index="1" component_pin="TMDS_OUT_data_n_1"/> 
-              <pin_map port_index="2" component_pin="TMDS_OUT_data_n_2"/> 
+              <pin_map port_index="0" component_pin="hdmi_tx_0_n"/> 
+              <pin_map port_index="1" component_pin="hdmi_tx_1_n"/> 
+              <pin_map port_index="2" component_pin="hdmi_tx_2_n"/> 
             </pin_maps>
           </port_map>
         </port_maps>
       </interface>
-      <interface mode="master" name="hdmi_out_hpd_led" type="xilinx.com:interface:gpio_rtl:1.0" of_component="hdmi_out_hpd">
+
+	  <interface mode="master" name="hdmi_out_ddc" type="xilinx.com:interface:iic_rtl:1.0" of_component="hdmi_out" preset_proc="hdmi_out_preset">
+        <preferred_ips>
+          <preferred_ip vendor="xilinx.com" library="ip" name="axi_iic" order="0"/>
+        </preferred_ips>
+        <description>DVI/HDMI Source DDC</description>
         <port_maps>
-          <port_map logical_port="TRI_O" physical_port="hdmi_tx_hpd" dir="out">
+          <port_map logical_port="SDA_I" physical_port="hdmi_out_ddc_sda_i" dir="inout">
             <pin_maps>
-              <pin_map port_index="0" component_pin="hdmi_tx_hpd"/> 
+              <pin_map port_index="0" component_pin="hdmi_tx_scl"/>
             </pin_maps>
           </port_map>
+          <port_map logical_port="SDA_O" physical_port="hdmi_out_ddc_sda_o" dir="inout">
+            <pin_maps>
+              <pin_map port_index="0" component_pin="hdmi_tx_sda"/>
+            </pin_maps>
+          </port_map>
+          <port_map logical_port="SDA_T" physical_port="hdmi_out_ddc_sda_t" dir="inout">
+            <pin_maps>
+              <pin_map port_index="0" component_pin="hdmi_tx_sda"/>
+            </pin_maps>
+          </port_map>
+          <port_map logical_port="SCL_I" physical_port="hdmi_out_ddc_scl_i" dir="inout">
+            <pin_maps>
+              <pin_map port_index="0" component_pin="hdmi_tx_scl"/>
+            </pin_maps>
+          </port_map>
+          <port_map logical_port="SCL_O" physical_port="hdmi_out_ddc_scl_o" dir="inout">
+            <pin_maps>
+              <pin_map port_index="0" component_pin="hdmi_tx_scl"/>
+            </pin_maps>
+          </port_map>
+          <port_map logical_port="SCL_T" physical_port="hdmi_out_ddc_scl_t" dir="inout">
+            <pin_maps>
+              <pin_map port_index="0" component_pin="hdmi_tx_scl"/>
+            </pin_maps>
+          </port_map>
+        </port_maps>
+      </interface>
+    
+      <interface mode="master" name="hdmi_out_hpd" type="xilinx.com:interface:gpio_rtl:1.0" of_component="hdmi_out" preset_proc="hdmi_out_preset">
+        <description>DVI/HDMI Source Hot-Plug Detect Input</description>
+      	<preferred_ips>
+		  <preferred_ip vendor="xilinx.com" library="ip" name="axi_gpio" order="0"/>
+		</preferred_ips>
+        <port_maps>
 		  <port_map logical_port="TRI_I" physical_port="hdmi_tx_hpd" dir="in">
             <pin_maps>
               <pin_map port_index="0" component_pin="hdmi_tx_hpd"/> 
             </pin_maps>
           </port_map>
-		  <port_map logical_port="TRI_T" physical_port="hdmi_tx_hpd" dir="out">
-            <pin_maps>
-              <pin_map port_index="0" component_pin="hdmi_tx_hpd"/> 
-            </pin_maps>
-          </port_map>
         </port_maps>
       </interface>
-	   
+ 	   
 	  <interface mode="master" name="ja" type="digilentinc.com:interface:pmod_rtl:1.0" of_component="ja">
         <port_maps>
           <port_map logical_port="PIN1_I" physical_port="JA1" dir="in"> 
@@ -764,17 +803,21 @@
 	  </component_mode>
 	</component_modes>
   </component>
+  
   <component name="hdmi_out" display_name="DVI/HDMI Source" type="chip" sub_type="chip" major_group="HDMI">
 	<description>HDMI Connector as DVI/HDMI Source (Requires Digilent's TMDS interface)</description>
+    <component_modes>
+	  <component_mode name="dvi_source" display_name="DVI Source Mode">
+	    <interfaces>
+		  <interface name="hdmi_out_tmds" order="0" />
+          <interface name="hdmi_out_ddc" order="1" optional="true" />
+		  <interface name="hdmi_out_hpd" order="2" optional="true" />
+		</interfaces>
+	  </component_mode>
+	</component_modes>
   </component>
-  <component name="hdmi_out_hpd" display_name="DVI/HDMI Source Hot-Plug Detect" type="chip" sub_type="chip" major_group="HDMI">
-	<description>DVI/HDMI Source Hot-Plug Detect Input (Active-Low Reset Input)</description>
-  </component>
-
-  
-  
-  
 </components>
+
 <jtag_chains>
   <jtag_chain name="chain1">
     <position name="0" component="part0"/>
@@ -804,13 +847,10 @@
   </connection>
     
   <connection name="part0_hdmi_out" component1="part0" component2="hdmi_out">
-    <connection_map name="part0_hdmi_out_1" c1_st_index="23" c1_end_index="30" c2_st_index="0" c2_end_index="7"/>
-  </connection>
-  
-  <connection name="part0_hdmi_out_hpd_led" component1="part0" component2="hdmi_out_hpd_led">
-    <connection_map name="part0_hdmi_out_hpd_led_1" c1_st_index="22" c1_end_index="22" c2_st_index="0" c2_end_index="0"/>
-  </connection>
-   
+    <connection_map name="part0_hdmi_out_tmds" c1_st_index="23" c1_end_index="30" c2_st_index="0" c2_end_index="7"/>
+    <connection_map name="part0_hdmi_out_ddc" c1_st_index="79" c1_end_index="80" c2_st_index="0" c2_end_index="1"/>
+    <connection_map name="part0_hdmi_out_hpd" c1_st_index="22" c1_end_index="22" c2_st_index="0" c2_end_index="0"/>
+  </connection>   
   
   <connection name="part0_ja" component1="part0" component2="ja">
     <connection_map name="part0_ja_1" c1_st_index="39" c1_end_index="46" c2_st_index="0" c2_end_index="7"/>
